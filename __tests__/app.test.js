@@ -31,31 +31,31 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
+    test('returns documents', async() => {
 
       const expectation = [
         {
-          'id': 1,
-          'name': 'bessie',
-          'coolfactor': 3,
-          'owner_id': 1
+          id: 1,
+          title: 'The First Document',
+          body_text: 'This is a document with some text in the body.',
+          owner_id: 1
         },
         {
-          'id': 2,
-          'name': 'jumpy',
-          'coolfactor': 4,
-          'owner_id': 1
+          id: 2,
+          title: 'Untitled',
+          body_text: 'There is no content here.',
+          owner_id: 1
         },
         {
-          'id': 3,
-          'name': 'spot',
-          'coolfactor': 10,
-          'owner_id': 1
+          id: 3,
+          title: 'See Spot Type',
+          body_text: 'oiejfoskdfdfOSDO SODOSDNRF9843OUEWJ - Spot is a dog and is bad at typing.',
+          owner_id: 1
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/documents')
         .expect('Content-Type', /json/)
         .expect(200);
 
