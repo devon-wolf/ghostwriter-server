@@ -31,6 +31,7 @@ describe('app routes', () => {
       return client.end(done);
     });
 
+    // unprotected route with test docs to confirm basic functionality
     test('returns documents', async() => {
 
       const expectation = [
@@ -61,5 +62,30 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
+
+    test('creates a document as the test user', async() => {
+      const newDoc = {
+        title: 'I Am a Special User',
+        body_text: 'And I write secret text in this secret place.'
+      };
+
+      const expectation = 
+        {
+          id: 4,
+          title: 'I Am a Special User',
+          body_text: 'And I write secret text in this secret place.',
+          owner_id: 2
+        };
+
+      const data = await fakeRequest(app)
+        .post('/api/documents')
+        .set({ Authorization: token })
+        .send(newDoc)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
   });
 });
