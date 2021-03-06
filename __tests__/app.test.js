@@ -87,5 +87,29 @@ describe('app routes', () => {
       expect(data.body).toEqual(expectation);
     });
 
+    test('edits a document as the test user', async() => {
+      const editedDoc = {
+        title: 'I Am Special',
+        body_text: 'But I don\'t need to prove myself to you.'
+      };
+
+      const expectation = 
+        {
+          id: 4,
+          title: 'I Am Special',
+          body_text: 'But I don\'t need to prove myself to you.',
+          owner_id: 2
+        };
+
+      const data = await fakeRequest(app)
+        .put('/api/documents/4')
+        .set({ Authorization: token })
+        .send(editedDoc)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
   });
 });
