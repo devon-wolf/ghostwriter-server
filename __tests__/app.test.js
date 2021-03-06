@@ -131,5 +131,24 @@ describe('app routes', () => {
 
     });
 
+    test('gets a single document by its ID as the test user', async() => {
+      const expectation = 
+        {
+          id: 4,
+          title: 'I Am Special',
+          body_text: 'But I don\'t need to prove myself to you.',
+          owner_id: 2
+        };
+
+      const data = await fakeRequest(app)
+        .get('/api/documents/4')
+        .set({ Authorization: token })
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+
+    });
+
   });
 });
