@@ -111,5 +111,25 @@ describe('app routes', () => {
       expect(data.body).toEqual(expectation);
     });
 
+    test('gets all documents as the test user', async() => {
+      const expectation = [
+        {
+          id: 4,
+          title: 'I Am Special',
+          body_text: 'But I don\'t need to prove myself to you.',
+          owner_id: 2
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/api/documents')
+        .set({ Authorization: token })
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+
+    });
+
   });
 });
